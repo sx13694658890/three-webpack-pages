@@ -4,12 +4,22 @@ import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry } from "three"
 import {basicMaterial, lamberMaterial} from './materials/index.js'
 
 // 盒子
-export const boxMesh = new Mesh(
+let boxIndex=0
+let boxPoor=[]
+export const boxMesh=() =>{
+  
+   const boxMesh= new Mesh(
     new BoxGeometry(1, 1),
     lamberMaterial({color:0xff0000})
   )
+  boxMesh.name="boxMesh-"+boxIndex
   boxMesh.position.y=1
   boxMesh.castShadow=true
+  boxIndex+=1
+  boxPoor.push(boxMesh)
+  return boxPoor
+} 
+ 
 
 // 平面
   export  const planeMesh=new Mesh(new PlaneGeometry(10,10),
