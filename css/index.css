@@ -1,0 +1,36 @@
+.box{
+    /* background-color: dodgerblue; */
+    background-image: url('../images/222.jpeg');
+    width: 100px;
+    height: 100px;
+}
+
+
+body,html{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height:100vh
+}
+
+#canvas{
+    width: 100vw;
+    height:50%;
+    background-color: transparent;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.container{
+    position: absolute;
+    display: none;
+    left:  0;
+    top: 0;
+    width: 100px;
+    height: 400px;
+    background-color: aliceblue;
+
+    
+}

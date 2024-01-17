@@ -1,0 +1,17 @@
+$background1:'red';
+
+.box{
+    background-color: $background1;
+}
+
+:root{
+    --red:#d33;
+}
+
+
+h1{
+    display:-webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    color:var(--red);
+}
