@@ -19,7 +19,8 @@ module.exports={
    mode:"development",
    entry:{
     react:['react','react-dom'],
-    main:"./main.js"
+    main:"./main.js",
+    main01:"./main01.js"
    },
    output: {
     filename:"[name]_bundle.js",
@@ -81,11 +82,18 @@ module.exports={
         threadPool:happyThreadPool
     }),
     new HtmlWebpackPlugin({
-        template:path.resolve(__dirname,'./index.html'),
+        template:path.resolve(__dirname,'./pubic/index.html'),
         title:"webpack",
         filename:'index.html',
         inject:"body",
         chunks:['main',"react"]
+    }),
+    new HtmlWebpackPlugin({
+        template:path.resolve(__dirname,'./public/index01.html'),
+        title:"webpack",
+        filename:'index01.html',
+        inject:"body",
+        chunks:['main01']
     }),
     new MiniCssExtractPlugin({
         filename:"./css/[name].css"
