@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack  --profile --json > stats.json --config webpack.dev.js --color --progress",
-    "dev":"webpack serve --client-progress"
+    "dev": "webpack serve --client-progress"
   },
   "keywords": [],
   "author": "",
@@ -52,6 +52,7 @@
     "url-loader": "^4.1.1",
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4",
+    "webpack-glsl-loader": "^1.0.1",
     "webpack-node-externals": "^3.0.0",
     "webpack-parallel-uglify-plugin": "^2.0.0",
     "workbox-webpack-plugin": "^7.0.0"

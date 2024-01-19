@@ -1,6 +1,6 @@
 import "./css/index.css";
 import { Scene, AxesHelper, Clock, } from "three";
-import { sphereMesh, planeMesh, multiMeshes, boxMesh, cubeBox, lineMesh } from "./geometry/index.js";
+import { sphereMesh, planeMesh, multiMeshes, boxMesh, cubeBox, lineMesh, circleMesh, ringMesh, shapeMesh, convexMesh, latheMesh, extrudeMesh } from "./geometry/index.js";
 import { spotLight, pointLight, ambientLight } from "./lights/index.js"
 import { OrbitControls, Gui } from "./controls/index.js";
 import { camera } from "./camera/index.js";
@@ -31,9 +31,14 @@ window.onload = function () {
 
 // 场景几何
 function sceneGeometryInit() {
-    scene.add(sphereMesh)
+    // scene.add(sphereMesh)
     scene.add(planeMesh);
     scene.add(lineMesh)
+    // scene.add(convexMesh)
+    // scene.add(latheMesh)
+    scene.add(extrudeMesh)
+    // scene.add(ringMesh)
+    // scene.add(shapeMesh)
 }
 // 场景灯光
 function sceneLightInit() {
@@ -71,6 +76,9 @@ function testInit() {
 
 }
 
+const control=new OrbitControls(camera,renderer.domElement)
+control.update()
+control.autoRotate=true
 
 const clock = new Clock();
 let time = 0;

@@ -14,6 +14,20 @@ const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const configuration = {};
+const fs=require('fs')
+const pubUrl=path.resolve(__dirname,'./public')
+const dirLists=fs.readdirSync(pubUrl)
+const HtmlWebpackPluginPoor=[]
+dirLists.forEach((file,index)=>{
+    const newIndex=index==0?index:"0"+index
+    HtmlWebpackPluginPoor.push(new HtmlWebpackPlugin({
+        template:pubUrl+'/'+file,
+        title: "webpack",
+        filename: file,
+        inject: "body",
+        chunks: ['main'+newIndex]
+    }))
+})
 
 module.exports = {
     mode: "development",
@@ -21,7 +35,8 @@ module.exports = {
         react: ['react', 'react-dom'],
         main: "./main.js",
         main01: "./main01.js",
-        main02: "./main02.js"
+        main02: "./main02.js",
+        main03: "./main03.js"
     },
     output: {
         filename: "[name]_bundle.js",
@@ -76,6 +91,14 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.glsl$/,
+                use: [
+                    {
+                        loader:"webpack-glsl-loader",
+                    },
+                ],
+            }
         ]
     },
     plugins: [
@@ -86,27 +109,8 @@ module.exports = {
         //     verbose:true,
         //     threadPool:happyThreadPool
         // }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './public/index.html'),
-            title: "webpack",
-            filename: 'index.html',
-            inject: "body",
-            chunks: ['main', "react"]
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './public/index01.html'),
-            title: "webpack",
-            filename: 'index01.html',
-            inject: "body",
-            chunks: ['main01']
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './public/index02.html'),
-            title: "webpack",
-            filename: 'index02.html',
-            inject: "body",
-            chunks: ['main02']
-        }),
+        ...HtmlWebpackPluginPoor,
+        
         new MiniCssExtractPlugin({
             filename: "./css/[name].css"
         }),
