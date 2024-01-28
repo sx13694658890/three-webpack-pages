@@ -14,18 +14,18 @@ const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const configuration = {};
-const fs=require('fs')
-const pubUrl=path.resolve(__dirname,'./public')
-const dirLists=fs.readdirSync(pubUrl)
-const HtmlWebpackPluginPoor=[]
-dirLists.forEach((file,index)=>{
-    const newIndex=index==0?index:"0"+index
+const fs = require('fs')
+const pubUrl = path.resolve(__dirname, './public')
+const dirLists = fs.readdirSync(pubUrl)
+const HtmlWebpackPluginPoor = []
+dirLists.forEach((file, index) => {
+    const newIndex = index == 0 ? index : "0" + index
     HtmlWebpackPluginPoor.push(new HtmlWebpackPlugin({
-        template:pubUrl+'/'+file,
+        template: pubUrl + '/' + file,
         title: "webpack",
         filename: file,
         inject: "body",
-        chunks: ['main'+newIndex]
+        chunks: ['main' + newIndex]
     }))
 })
 
@@ -48,7 +48,10 @@ module.exports = {
     //    devtool:'source-map',
     resolve: {
         mainFields: ['jsnext:main', 'browser', 'main'],
-        extensions: ['.js', '.ts', '.jsx', '.tsx']
+        extensions: ['.js', '.ts', '.jsx', '.tsx'],
+        alias: {
+            '@/lib': path.resolve(__dirname, './lib')
+        }
     },
     //    externals :['react','@babel/plugin-transform-runtime'] ,
     devServer: {
@@ -56,6 +59,10 @@ module.exports = {
         compress: true,
         client: {
             logging: 'error',
+        },
+        static: {
+            directory: path.resolve(__dirname, './assets'),
+            publicPath: "/assets"
         },
         proxy: {
 
@@ -95,7 +102,7 @@ module.exports = {
                 test: /\.glsl$/,
                 use: [
                     {
-                        loader:"webpack-glsl-loader",
+                        loader: "webpack-glsl-loader",
                     },
                 ],
             }
@@ -110,7 +117,7 @@ module.exports = {
         //     threadPool:happyThreadPool
         // }),
         ...HtmlWebpackPluginPoor,
-        
+
         new MiniCssExtractPlugin({
             filename: "./css/[name].css"
         }),

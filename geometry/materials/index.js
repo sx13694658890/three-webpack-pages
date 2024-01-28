@@ -27,7 +27,7 @@ export const normalMaterial = (payload = {}) => new MeshNormalMaterial({
 
 
 // 联合材质
-export const meshes = (geometry, ...material) => new SceneUtils.createMultiMaterialObject(geometry, material)
+// export const meshes = (geometry, ...material) => SceneUtils.createMultiMaterialObject(geometry, material)
 
 
 
@@ -76,15 +76,19 @@ export const lineMaterial = (payload = { type: 'solid' }) => {
 
     const type = payload.type;
     return type == 'solid' ?
-     new LineBasicMaterial({
-        color: 0x00ffff,
-        linewidth: 5,
-        linecap: "round",
-        linejoin: "round"
-    }) :
-     new LineDashedMaterial({
-        color: 0x00ffff,
-        dashSize: 2,
-        gapSize:1
-    })
+        new LineBasicMaterial({
+            color: 0x00ffff,
+            linewidth: 5,
+            linecap: "round",
+            linejoin: "round"
+        }) :
+        new LineDashedMaterial({
+            color: 0x00ffff,
+            dashSize: 2,
+            gapSize: 1
+        })
 }
+
+
+
+

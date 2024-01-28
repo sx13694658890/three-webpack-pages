@@ -1,10 +1,12 @@
-import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry,Path, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry } from "three"
-import {ConvexGeometry} from "three/examples/jsm/geometries/ConvexGeometry.js"
+import THREE, { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry, Path, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry, ParametricGeometry, TextGeometry, FlatShading } from "three"
+import { ConvexGeometry } from "three/examples/jsm/geometries/ConvexGeometry.js"
+// import { TextGeometry } from 'three/
+import { radialWave } from '../utils/common.js'
+import { basicMaterial, depthMaterial, multipleFace, lambertMaterial, phongMaterial, shaderMaterial, lineMaterial } from './materials/index.js'
+import { textLoader } from "../loader/index.js"
 
-import { basicMaterial, depthMaterial, meshes, multipleFace, lambertMaterial, phongMaterial,shaderMaterial, lineMaterial } from './materials/index.js'
-
-
-
+import ThreeBSP from '@/lib/csg.js'
+const BSP = ThreeBSP(THREE)
 
 
 // 盒子
@@ -54,113 +56,171 @@ export const sphereMesh = new Mesh(new SphereGeometry(1.5, 32, 32), shaderMateri
     // color: 0xcccccc,
     // ambient: 0xcccccc,
     // emissive: 0x1243ff,
-      //  specular: 0xcccccc,
+    //  specular: 0xcccccc,
     // shininess: 50,
     // metal: true,
     //wrapAround: true
     // wrapAround: true
-    
+
 }))
 sphereMesh.position.set(0, 1, 0)
 sphereMesh.castShadow = true
-sphereMesh.visible=false
+sphereMesh.visible = false
 // 线
-const bufferGeo=new BufferGeometry()
-bufferGeo.setAttribute('position',new BufferAttribute(new Float32Array([
-  -5, 0, 0,
-  0,  5, 0,
-  5,  0, 0,
-  0,  5, 0,
-  0, 0,  5,
-  0,  5, 0,
-  0, 0,  -5,
-]),3))
-export const lineMesh=new Line(
-   bufferGeo
-  ,lineMaterial()
+const bufferGeo = new BufferGeometry()
+bufferGeo.setAttribute('position', new BufferAttribute(new Float32Array([
+    -5, 0, 0,
+    0, 5, 0,
+    5, 0, 0,
+    0, 5, 0,
+    0, 0, 5,
+    0, 5, 0,
+    0, 0, -5,
+]), 3))
+export const lineMesh = new Line(
+    bufferGeo
+    , lineMaterial()
 )
 
 
 
-export const circleMesh=new Mesh(new CircleGeometry(0.5,22,0,Math.PI*2),basicMaterial())
-circleMesh.position.set(0,1,0)
+export const circleMesh = new Mesh(new CircleGeometry(0.5, 22, 0, Math.PI * 2), basicMaterial())
+circleMesh.position.set(0, 1, 0)
 
 // 拉伸
 
-const extrude=new Shape()
-extrude.moveTo(0,0)
-extrude.lineTo(0,2)
-extrude.lineTo(2,2)
-extrude.lineTo(2,0)
-extrude.lineTo(0,0)
-export const extrudeMesh=new Mesh(
-  new ExtrudeGeometry(extrude,{
-    steps:1,
-    depth:2,
-    bevelEnabled:true
-  }),
-  basicMaterial({
-    color:'red'
-  })
+const extrude = new Shape()
+extrude.moveTo(0, 0)
+extrude.lineTo(0, 2)
+extrude.lineTo(2, 2)
+extrude.lineTo(2, 0)
+extrude.lineTo(0, 0)
+export const extrudeMesh = new Mesh(
+    new ExtrudeGeometry(extrude, {
+        steps: 1,
+        depth: 2,
+        bevelEnabled: true
+    }),
+    basicMaterial({
+        color: 'red'
+    })
 )
+// const newextrudeMesh = new BSP(extrudeMesh)
 
-export const ringMesh=new Mesh(new RingGeometry(),basicMaterial({color:0x23fb21}))
 
-ringMesh.position.set(1,1,1)
+
+
+
+export const ringMesh = new Mesh(new RingGeometry(), basicMaterial({ color: 0x23fb21 }))
+
+ringMesh.position.set(1, 1, 1)
 
 var heartShape = new Shape();
 
-heartShape.moveTo( 1,1 );
+heartShape.moveTo(1, 1);
 // heartShape.lineTo(2,2)
 // heartShape.bezierCurveTo(3,4,4,5,3,3)
 // heartShape.splineThru([new Vector2(5,3),new Vector2(6,6),new Vector2(7,8)])
 // heartShape.quadraticCurveTo(2,2,0,0)
 
-const path=new Path()
-path.lineTo(0,0.5)
-path.quadraticCurveTo(0, 1, 0.2, 1 )
-path.lineTo( 1, 1 );
+const path = new Path()
+path.lineTo(0, 0.5)
+path.quadraticCurveTo(0, 1, 0.2, 1)
+path.lineTo(1, 1);
 
 
 
-const hole3=new Path()
-heartShape.absellipse(4,4,4,2,0,2*Math.PI,true)
+const hole3 = new Path()
+heartShape.absellipse(4, 4, 4, 2, 0, 2 * Math.PI, true)
 // heartShape.holes.push(hole3)
 
 // 形状
-export const  shapeMesh=new Mesh(
-  new ShapeGeometry(heartShape,40),
-  basicMaterial({
-    side:DoubleSide
-  })
+export const shapeMesh = new Mesh(
+    new ShapeGeometry(heartShape, 40),
+    basicMaterial({
+        side: DoubleSide
+    })
 )
-console.log('111111',heartShape.getPointsHoles());
+console.log('111111', heartShape.getPointsHoles());
 // 联合材质生成的网格体
-export const multiMeshes = meshes(new BoxGeometry(5, 5, 5, 32, 32, 32), basicMaterial({ color: 0x00ff00, transparent: true, blending: MultiplyBlending }), depthMaterial())
-multiMeshes.children[0].scale.set(0.99, 0.99, 0.99)
-multiMeshes.position.set(0, 5, 0)
+// export const multiMeshes = meshes(new BoxGeometry(5, 5, 5, 32, 32, 32), basicMaterial({ color: 0x00ff00, transparent: true, blending: MultiplyBlending }), depthMaterial())
+// multiMeshes.children[0].scale.set(0.99, 0.99, 0.99)
+// multiMeshes.position.set(0, 5, 0)
 
 
 
-var points=[]
-var spline=[]
-for(var i=0;i<20;i++){
-  var x=-2+Math.round(Math.random()*4);
-  var y=-2+Math.round(Math.random()*4);
-  var z=-2+Math.round(Math.random()*4);
-  spline.push(new Vector3((Math.sin(i * 0.2) + Math.cos(i * 0.3)) * 12 + 12,0,
-      i - 2 + 2 / 2))
-  points.push(new Vector3(x,y,z))
+var points = []
+var spline = []
+for (var i = 0; i < 20; i++) {
+    var x = -2 + Math.round(Math.random() * 4);
+    var y = -2 + Math.round(Math.random() * 4);
+    var z = -2 + Math.round(Math.random() * 4);
+    spline.push(new Vector3((Math.sin(i * 0.2) + Math.cos(i * 0.3)) * 12 + 12, 0,
+        i - 2 + 2 / 2))
+    points.push(new Vector3(x, y, z))
 }
 // 凸面几何体
-export  const convexMesh=new Mesh(
-  new ConvexGeometry(points),
-  basicMaterial()
+export const convexMesh = new Mesh(
+    new ConvexGeometry(points),
+    basicMaterial()
 )
 
 
-export  const latheMesh=new Mesh(
-  new LatheGeometry(spline,12,0,Math.PI/2),
-  basicMaterial()
+export const latheMesh = new Mesh(
+    new LatheGeometry(spline, 12, 0, Math.PI / 2),
+    basicMaterial()
 )
-latheMesh.position.set(0,1,0)
+latheMesh.position.set(0, 1, 0)
+
+
+
+// Parametric
+
+export const parametricMesh = new Mesh(new ParametricGeometry(radialWave, 120, 120, false), basicMaterial())
+parametricMesh.position.set(0, 3, 0)
+
+// text
+export function textGeoToScene(scene) {
+    var textMesh = undefined
+    textLoader.load('/assets/gentilis_regular.typeface.json', (font) => {
+        textMesh = new Mesh(
+            new TextGeometry("hello world", {
+                size: 2,
+                height: .2,
+                weight: 'normal',
+                font,
+                bevelThickness: 10,
+                bevelEnabled: false,
+                bevelSegments: 20,
+                curveSegments: 20,
+                bevelSize: 5,
+                steps: 10,
+
+            }), basicMaterial({ color: 0xff0000 }))
+        textMesh.position.set(4, 1, 1)
+        scene.add(textMesh)
+    })
+}
+
+let new3Bsp;
+var new1 = new Mesh(
+    new BoxGeometry(3, 3, 3),
+    lambertMaterial({ color: 'red', wireframe: true }))
+new1.position.set(0.5, 0, 0)
+var new2 = new Mesh(
+    new BoxGeometry(4, 4, 4),
+    lambertMaterial({
+        color: 'blue',
+        wireframe: true,
+        opacity: 0.5,
+        depthTest: true,
+        flatShading: FlatShading
+    }))
+var new1Bsp = new BSP(new1)
+const newtoBsp = new BSP(new2)
+export const newBsp = newtoBsp.subtract(new1Bsp)
+new3Bsp = newBsp.toMesh()
+new3Bsp.geometry.computeFaceNormals()
+new3Bsp.geometry.computeVertexNormals()
+
+export default new3Bsp

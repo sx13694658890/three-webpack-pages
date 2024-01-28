@@ -23,7 +23,8 @@
     "postcss-loader": "^7.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.160.0",
+    "three": "0.124.0",
+    "three-js-csg": "^72.0.0",
     "webpack": "^5.89.0",
     "webpack-dev-server": "^4.15.1"
   },

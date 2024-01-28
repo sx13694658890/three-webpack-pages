@@ -1,21 +1,22 @@
-.box{
+.box {
     /* background-color: dodgerblue; */
-    background-image: url('../images/222.jpeg');
+    background-image: url('/assets/images/222.jpeg');
     width: 100px;
     height: 100px;
 }
 
 
-body,html{
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100vw;
-    height:100vh
+    height: 100vh
 }
 
-#canvas{
+#canvas {
     width: 100vw;
-    height:100vh;
+    height: 100vh;
     background-color: transparent;
     position: fixed;
     left: 0;
@@ -23,14 +24,14 @@ body,html{
     z-index: -1;
 }
 
-.container{
+.container {
     position: absolute;
     display: none;
-    left:  0;
+    left: 0;
     top: 0;
     width: 100px;
     height: 400px;
     background-color: aliceblue;
 
-    
+
 }
