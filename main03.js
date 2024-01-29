@@ -1,6 +1,6 @@
 import "./css/index.css";
 import { Scene, AxesHelper, Clock, } from "three";
-import { sphereMesh, planeMesh, multiMeshes, boxMesh, cubeBox, lineMesh, circleMesh, ringMesh, shapeMesh, convexMesh, latheMesh, extrudeMesh } from "./geometry/index.js";
+import { sphereMesh, planeMesh, multiMeshes, boxMesh, cubeBox, lineMesh, circleMesh, ringMesh, shapeMesh, convexMesh, latheMesh, extrudeMesh,createParticles } from "./geometry/index.js";
 import { spotLight, pointLight, ambientLight } from "./lights/index.js"
 import { OrbitControls, Gui } from "./controls/index.js";
 import { camera } from "./camera/index.js";
@@ -36,7 +36,8 @@ function sceneGeometryInit() {
     scene.add(lineMesh)
     // scene.add(convexMesh)
     // scene.add(latheMesh)
-    scene.add(extrudeMesh)
+    // scene.add(extrudeMesh)
+    createParticles(scene)
     // scene.add(ringMesh)
     // scene.add(shapeMesh)
 }

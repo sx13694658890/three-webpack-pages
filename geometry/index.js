@@ -1,9 +1,7 @@
-import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry,Path, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry } from "three"
+import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry,Path,Points, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry,PointsMaterial,Float32BufferAttribute} from "three"
 import {ConvexGeometry} from "three/examples/jsm/geometries/ConvexGeometry.js"
 
 import { basicMaterial, depthMaterial, meshes, multipleFace, lambertMaterial, phongMaterial,shaderMaterial, lineMaterial } from './materials/index.js'
-
-
 
 
 
@@ -164,3 +162,16 @@ export  const latheMesh=new Mesh(
   basicMaterial()
 )
 latheMesh.position.set(0,1,0)
+
+export function createParticles(scene){
+   const geo=new BufferGeometry()
+   const vertices=[]
+   const point=new PointsMaterial({color: 0x888888,size:0.1})
+   for(let x=0;x<5;x++){
+    for(let y=0;y<5;y++){
+      vertices.push(x*0.5,y*0.5,0)
+    }
+   }
+   geo.setAttribute('position',new Float32BufferAttribute(vertices,3))
+   scene.add(new Points(geo,point))
+}
