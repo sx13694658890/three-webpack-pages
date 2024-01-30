@@ -23,3 +23,10 @@ https://jsrun.net/t/g3pKp
 #### MeshFaceMaterial 材质 
 在新版 three.js 中已经不存在这种材质了，因为原则上来讲，旧版中的 MeshFaceMaterial 材质其实就是一个材质数组。 
 需要为物体的每一个面单独指定材质
+
+
+
+_three.Geometry在新版本被删除
+
+BufferGeometryUtils.mergeBufferGeometries
+在最新版本的three.js中 BufferGeometryUtils.mergeBufferGeometries() 真正实现了将多个mesh合并为一个mesh(联合体)，且可以使用多个Material（材质），使其渲染的速度大大提升。【老版本里是Three.Geometry.merge】。

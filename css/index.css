@@ -1,6 +1,6 @@
 .box{
     /* background-color: dodgerblue; */
-    background-image: url('../images/222.jpeg');
+    background-image: url('/assets/images/222.jpeg');
     width: 100px;
     height: 100px;
 }

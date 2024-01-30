@@ -1,9 +1,9 @@
-import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry,Path,Points, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry,PointsMaterial,Float32BufferAttribute} from "three"
+import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry,Path,Points, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry,PointsMaterial,Float32BufferAttribute,Sprite,SpriteMaterial,Texture} from "three"
 import {ConvexGeometry} from "three/examples/jsm/geometries/ConvexGeometry.js"
 
-import { basicMaterial, depthMaterial, meshes, multipleFace, lambertMaterial, phongMaterial,shaderMaterial, lineMaterial, pointMaterial } from './materials/index.js'
+import { basicMaterial, depthMaterial, meshes, multipleFace, lambertMaterial, phongMaterial,shaderMaterial, lineMaterial, pointMaterial,normalMaterial } from './materials/index.js'
 
-
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
 // 盒子
 let boxIndex = 0
@@ -175,3 +175,70 @@ export function createParticles(scene){
    geo.setAttribute('position',new Float32BufferAttribute(vertices,3))
    scene.add(new Points(geo, pointMaterial))
 }
+
+
+export const spriteMesh=new Sprite(new SpriteMaterial({
+  color:0xffffff,
+  side:DoubleSide,
+  map:generateSpriteTexture()
+}))
+
+
+
+function addCube () {
+  const cubeSize = 3
+  const cubeGeometry = new BoxGeometry(cubeSize, cubeSize, cubeSize)
+  const cubeMaterial = normalMaterial({
+    transparent: true,
+    
+  })
+  const cube = new Mesh(cubeGeometry, cubeMaterial)
+  cube.castShadow = true
+ 
+  cube.position.x = -3 + Math.round(Math.random()*6)
+  cube.position.y = -4+Math.round(Math.random()*8 )
+  cube.position.z =-3+Math.round(Math.random()*3 )
+ 
+  return cube
+ }
+
+
+ // 将多个网格 merge 
+export function createMerge(scene){
+  const group=new Group()
+  let arrayGeometry=[]
+  for (let i = 0; i < 5; i++) {
+    const cube=addCube ()
+    cube.updateMatrix()
+    // arrayGeometry.push(cube.geometry.clone().applyMatrix4(cube.matrixWorld))
+    group.add(cube)
+  }
+  
+  // console.log(22222,arrayGeometry)
+  // const geometry=BufferGeometryUtils.mergeGeometries(arrayGeometry, true)
+  scene.add(group)
+  // scene.add(new Mesh(geometry, normalMaterial({
+  //   transparent: true,
+  //   opacity: 0.5
+  // })))
+}
+
+
+// 通过canvas 设置纹理
+function generateSpriteTexture(){
+  var canvas=document.createElement('canvas');
+  canvas.width = 16;
+  canvas.height = 16;
+  var context=canvas.getContext('2d')
+  var gradient=context.createRadialGradient(8,8,0,8,8,8);
+  gradient.addColorStop(0,'rgba(255,255,255,1');
+  gradient.addColorStop(0.2,'rgba(10,255,255,1');
+  gradient.addColorStop(0.6,'rgba(10,0,255,1');
+  gradient.addColorStop(1.0,'rgba(255,255,255,1');
+  context.fillStyle=gradient;
+  context.fillRect(0,0,canvas.width,canvas.height)
+  var texture=new Texture(canvas)
+  texture.needsUpdate=true
+  return texture
+}
+

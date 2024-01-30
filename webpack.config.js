@@ -57,6 +57,10 @@ module.exports = {
         client: {
             logging: 'error',
         },
+        static:{
+            directory:path.resolve(__dirname,'./assets'),
+            publicPath:'/assets'
+        },
         proxy: {
 
         }

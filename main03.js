@@ -1,6 +1,6 @@
 import "./css/index.css";
-import { Scene, AxesHelper, Clock, } from "three";
-import { sphereMesh, planeMesh, multiMeshes, boxMesh, cubeBox, lineMesh, circleMesh, ringMesh, shapeMesh, convexMesh, latheMesh, extrudeMesh,createParticles } from "./geometry/index.js";
+import { Scene, AxesHelper, Clock,Vector3,ArrowHelper } from "three";
+import { sphereMesh, planeMesh, multiMeshes, boxMesh, cubeBox, lineMesh, circleMesh, ringMesh, shapeMesh, convexMesh, latheMesh, extrudeMesh,createParticles,spriteMesh,createMerge } from "./geometry/index.js";
 import { spotLight, pointLight, ambientLight } from "./lights/index.js"
 import { OrbitControls, Gui } from "./controls/index.js";
 import { camera } from "./camera/index.js";
@@ -37,9 +37,11 @@ function sceneGeometryInit() {
     // scene.add(convexMesh)
     // scene.add(latheMesh)
     // scene.add(extrudeMesh)
-    createParticles(scene)
+    // createParticles(scene)
+    scene.add(spriteMesh)
     // scene.add(ringMesh)
     // scene.add(shapeMesh)
+    createMerge(scene)
 }
 // 场景灯光
 function sceneLightInit() {
@@ -59,7 +61,9 @@ function searchMesh() {
 // 辅助help
 function help() {
     const axes = new AxesHelper(150, 150);
+    const arrow=new ArrowHelper(new Vector3(0,1,0),undefined,2)
     scene.add(axes);
+    scene.add(arrow);
 }
 
 
