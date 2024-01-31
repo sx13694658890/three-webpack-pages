@@ -2,13 +2,13 @@ import "./css/index.css";
 import { Scene, AxesHelper, Clock,Vector3,ArrowHelper,Vector2 } from "three";
 import {boxMesh,shapeMesh,sphereMesh, planeMesh } from "./geometry/index.js";
 import { spotLight, pointLight, ambientLight } from "./lights/index.js"
-import { OrbitControls, Gui } from "./controls/index.js";
+import { createOrbitControls,createTrackballControls,createFlyControls, Gui } from "./controls/index.js";
 import { camera } from "./camera/index.js";
 import { renderer } from "./render/index.js";
 import { statsInit, stats,createRayCaster } from '@utils/common.js'
 import {createTween} from '@utils/tween.js'
 
-
+import { createMesh } from "./geometry/modelGlft/index.js";
 
 const scene = new Scene();
 
@@ -35,17 +35,20 @@ let tweenObj={
 window.onload = function () {
     sceneGeometryInit();
     sceneLightInit()
+    run();
     help();
     testInit()
     statsInit()
     eventInit()
 };
-
+let mixer;
 // 场景几何
-function sceneGeometryInit() {
+async function  sceneGeometryInit() {
     scene.add(planeMesh);
     scene.add(sphereMesh)
     // scene.add(lineMesh)
+    mixer=await createMesh(scene)
+    console.log(22222,mixer)
 }
 // 场景灯光
 function sceneLightInit() {
@@ -114,22 +117,31 @@ function eventInit(){
 }
 
 
-const control=new OrbitControls(camera,renderer.domElement)
-control.update()
-control.autoRotate=true
+const control=new createOrbitControls(camera,renderer.domElement)
+
+const trackball=createTrackballControls(camera,renderer.domElement)
+const fly=createFlyControls(camera,renderer.domElement)
+
 
 const clock = new Clock();
 let time = 0;
+
 function run() {
     const elapsed = clock.getElapsedTime();
-
+    const delta=clock.getDelta()
     // tween.update()
+    if(mixer){
+        mixer.update(elapsed-time)
+    }
     stats && stats.update()
     renderer.render(scene, camera);
-    control.update()
+    camera.updateProjectionMatrix()
+    // control.update()
+    // trackball.update()
+    fly.update(delta)
     requestAnimationFrame(run);
     time = elapsed;
 }
-run();
+
 
 

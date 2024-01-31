@@ -5,7 +5,6 @@ function show(conent){
     
 }
 
-
 export  const stats=new Stats()
 // 检测动画运行时的帧数
 export function statsInit(){

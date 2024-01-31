@@ -16,6 +16,9 @@ import { PDBLoader } from 'three/examples/jsm/loaders/PDBLoader'
 
 import {CSS2DRenderer,CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer'
 export {CSS2DRenderer,CSS2DObject}
+
+
+
 // text 文字加载
 export const fontLoader = new FontLoader()
 
@@ -32,7 +35,7 @@ export const objectLoader = new ObjectLoader()
 // 加载gltf 模型
 export function createLoaderGl(loaderPath) {
     const draco = new DRACOLoader()
-    draco.setDecoderPath("")
+    draco.setDecoderPath("three/examples/jsm/libs/draco")
     draco.setDecoderConfig({ type: 'js' })
     draco.preload()
     const gltfLoader = new GLTFLoader()
@@ -40,7 +43,7 @@ export function createLoaderGl(loaderPath) {
 
     return new Promise((res, rej) => {
         gltfLoader.load(loaderPath, (gltf) => {
-            res(gltf.scene)
+            res(gltf)
         })
     })
 }

@@ -8,6 +8,17 @@ import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUti
 
 import { objectLoader, pdbLoader, CSS2DObject, CSS2DRenderer } from "../loader/index.js"
 
+import {MorphBlendMesh} from 'three/examples/jsm/misc/MorphBlendMesh.js'
+import {MorphAnimMesh} from 'three/examples/jsm/misc/MorphAnimMesh.js'
+
+
+
+// 变形网格
+
+function createMorphMesh(){
+  const morph=new MorphAnimMesh()
+}
+
 
 
 // 盒子
@@ -325,3 +336,5 @@ export function createPBDLoader(scene) {
     scene.add(group)
   })
 }
+
+
