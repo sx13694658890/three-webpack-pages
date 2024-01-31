@@ -36,7 +36,8 @@ module.exports = {
         main: "./main.js",
         main01: "./main01.js",
         main02: "./main02.js",
-        main03: "./main03.js"
+        main03: "./main03.js",
+        main04: "./main04.js"
     },
     output: {
         filename: "[name]_bundle.js",
@@ -48,7 +49,12 @@ module.exports = {
     //    devtool:'source-map',
     resolve: {
         mainFields: ['jsnext:main', 'browser', 'main'],
-        extensions: ['.js', '.ts', '.jsx', '.tsx']
+        extensions: ['.js', '.ts', '.jsx', '.tsx'],
+        alias:{
+            "@lib":path.resolve(__dirname,'./lib'),
+            "@utils":path.resolve(__dirname,'./utils')
+        },
+        modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
     //    externals :['react','@babel/plugin-transform-runtime'] ,
     devServer: {

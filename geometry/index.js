@@ -53,8 +53,8 @@ planeMesh.receiveShadow = true
 
 
 //球体
-export const sphereMesh = new Mesh(new SphereGeometry(1.5, 32, 32), shaderMaterial({
-  // color: 0xcccccc,
+export const sphereMesh = new Mesh(new SphereGeometry(1, 32, 32), basicMaterial({
+  color: 0xcccccc,
   // ambient: 0xcccccc,
   // emissive: 0x1243ff,
   //  specular: 0xcccccc,
@@ -64,12 +64,14 @@ export const sphereMesh = new Mesh(new SphereGeometry(1.5, 32, 32), shaderMateri
   // wrapAround: true
 
 }))
-sphereMesh.position.set(0, 1, 0)
+sphereMesh.position.set(0, 3, 0)
 sphereMesh.castShadow = true
-sphereMesh.visible = false
+sphereMesh.visible = true
+sphereMesh.name="sphere_001"
+
 // 线
 const bufferGeo = new BufferGeometry()
-bufferGeo.setAttribute('position', new BufferAttribute(new Float32Array([
+bufferGeo.setAttribute('position', new Float32BufferAttribute([
   -5, 0, 0,
   0, 5, 0,
   5, 0, 0,
@@ -77,7 +79,7 @@ bufferGeo.setAttribute('position', new BufferAttribute(new Float32Array([
   0, 0, 5,
   0, 5, 0,
   0, 0, -5,
-]), 3))
+], 3,false))
 export const lineMesh = new Line(
   bufferGeo
   , lineMaterial()
@@ -300,8 +302,8 @@ export function createPBDLoader(scene) {
       end.x = positions.getX(i + 1);
       end.y = positions.getY(i + 1);
       end.z = positions.getZ(i + 1);
-      start.multiplyScalar( 1 );
-      end.multiplyScalar( 1 );
+      start.multiplyScalar( 2 );
+      end.multiplyScalar( 2 );
       const object = new Mesh( boxGeometry, phongMaterial( { color: 0xffffff } ) );
       object.position.copy( start );
       object.position.lerp( end, 0.5 );

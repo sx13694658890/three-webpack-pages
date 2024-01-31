@@ -39,3 +39,9 @@ draco_wasm_wrapper.js— WASM 解码器的 JavaScript 包装器。
 
 1. OBJ 和 MTL 格式
 OBJ 和MTL是相互配合的两种格式，经常一起使用。OBJ 文件定义几何体，而MTL 文件定义所用的材质
+
+
+
+##### TWEEN 
+easing 的表现
+https://tweenjs.github.io/tween.js/examples/03_graphs.html
