@@ -1,5 +1,5 @@
-import { DoubleSide, LineBasicMaterial, LineDashedMaterial, MeshBasicMaterial, MeshDepthMaterial, MeshLambertMaterial, MeshNormalMaterial, MeshPhongMaterial, ShadowMaterial, Vector2 } from "three";
-
+import { DoubleSide, LineBasicMaterial, LineDashedMaterial, MeshBasicMaterial, MeshDepthMaterial, MeshLambertMaterial, MeshNormalMaterial, MeshPhongMaterial, ShadowMaterial, Vector2,PointsMaterial,AdditiveBlending } from "three";
+import { texture } from "../../textures";
 import * as SceneUtils from 'three/examples/jsm/utils/SceneUtils'
 
 
@@ -88,3 +88,18 @@ export const lineMaterial = (payload = { type: 'solid' }) => {
         gapSize:1
     })
 }
+
+
+export const pointMaterial=new PointsMaterial({
+    color: 0x888888,
+    size:1,
+    transparent:true,
+    opacity:0.9,
+    map:texture,
+    blending:AdditiveBlending,
+    sizeAttenuation:true,
+    depthTest:false,
+    depthWrite:false
+})
+// pointMaterial.map.offset
+// pointMaterial.map.repeat

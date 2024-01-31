@@ -1,6 +1,8 @@
 
 import { WebGLRenderer,Color,PCFShadowMap, PCFSoftShadowMap,WebGLDeferredRenderer } from "three";
 const canvas = document.getElementById("canvas");
+canvas.width='100%'
+canvas.height='100%'
 function initGlRender(){
     const renderer = new WebGLRenderer({
         antialias: true,
