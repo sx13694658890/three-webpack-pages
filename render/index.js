@@ -1,21 +1,22 @@
 
-import { WebGLRenderer,Color,PCFShadowMap, PCFSoftShadowMap,WebGLDeferredRenderer } from "three";
+import { WebGLRenderer, Color, PCFShadowMap, PCFSoftShadowMap, WebGLDeferredRenderer } from "three";
 const canvas = document.getElementById("canvas");
-canvas.width='100%'
-canvas.height='100%'
-function initGlRender(){
+canvas.width = '100%'
+canvas.height = '100%'
+function initGlRender() {
     const renderer = new WebGLRenderer({
         antialias: true,
-        canvas,
-      });
-      
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setClearColor(new Color(0xeeeeee));
-      renderer.setPixelRatio(window.devicePixelRatio)
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type=PCFSoftShadowMap
-      return renderer
-    
+
+    });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(new Color(0xeeeeee));
+    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = PCFSoftShadowMap
+    document.body.appendChild(renderer.domElement)
+    return renderer
+
 }
 
 /**
@@ -23,17 +24,17 @@ function initGlRender(){
  * https://github.com/mrdoob/three.js/issues/7095
  */
 
-function initGlDeferredRender(){
-    const deferredRenderer=new WebGLDeferredRenderer()
-    return 
+function initGlDeferredRender() {
+    const deferredRenderer = new WebGLDeferredRenderer()
+    return
 }
 
 
-const renderer=initGlRender()
+const renderer = initGlRender()
 
 // 屏幕监听
 // function windowInit(){
- 
+
 //     const clientWidth=window.innerWidth
 //     const clientHeight=window.innerHeight
 //     if(canvas.width!==clientWidth||canvas.height!==clientHeight){
@@ -44,10 +45,10 @@ const renderer=initGlRender()
 //       renderer.setSize(canvas.width,canvas.height)
 //     }
 //   }
-  
 
 
 
-  export {
+
+export {
     renderer
-  }
+}

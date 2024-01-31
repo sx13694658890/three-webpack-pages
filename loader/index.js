@@ -14,8 +14,8 @@ import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader'
 import { PDBLoader } from 'three/examples/jsm/loaders/PDBLoader'
 
 
-import {CSS2DRenderer,CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer'
-export {CSS2DRenderer,CSS2DObject}
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer'
+export { CSS2DRenderer, CSS2DObject }
 
 
 
@@ -34,12 +34,12 @@ export const objectLoader = new ObjectLoader()
  */
 // 加载gltf 模型
 export function createLoaderGl(loaderPath) {
-    // const draco = new DRACOLoader()
-    // draco.setDecoderPath("three/examples/jsm/libs/draco")
-    // draco.setDecoderConfig({ type: 'js' })
-    // draco.preload()
+    const draco = new DRACOLoader()
+    draco.setDecoderPath("/assets/draco/")
+    draco.setDecoderConfig({ type: 'js' })
+    draco.preload()
     const gltfLoader = new GLTFLoader()
-    // gltfLoader.setDRACOLoader(draco)
+    gltfLoader.setDRACOLoader(draco)
 
     return new Promise((res, rej) => {
         gltfLoader.load(loaderPath, (gltf) => {
@@ -61,4 +61,4 @@ export function createOBJLoader(objPath) {
     })
 }
 
-export const pdbLoader=new PDBLoader()
+export const pdbLoader = new PDBLoader()
