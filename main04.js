@@ -8,7 +8,7 @@ import { renderer } from "./render/index.js";
 import { statsInit, stats,createRayCaster } from '@utils/common.js'
 import {createTween} from '@utils/tween.js'
 
-import { createMesh } from "./geometry/modelGlft/index.js";
+import { createMesh,createAnimate } from "./geometry/modelGlft/index.js";
 
 const scene = new Scene();
 
@@ -48,7 +48,8 @@ async function  sceneGeometryInit() {
     scene.add(sphereMesh)
     // scene.add(lineMesh)
     mixer=await createMesh(scene)
-    console.log(22222,mixer)
+   
+    createAnimate()
 }
 // 场景灯光
 function sceneLightInit() {

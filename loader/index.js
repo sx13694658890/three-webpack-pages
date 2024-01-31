@@ -34,12 +34,12 @@ export const objectLoader = new ObjectLoader()
  */
 // 加载gltf 模型
 export function createLoaderGl(loaderPath) {
-    const draco = new DRACOLoader()
-    draco.setDecoderPath("three/examples/jsm/libs/draco")
-    draco.setDecoderConfig({ type: 'js' })
-    draco.preload()
+    // const draco = new DRACOLoader()
+    // draco.setDecoderPath("three/examples/jsm/libs/draco")
+    // draco.setDecoderConfig({ type: 'js' })
+    // draco.preload()
     const gltfLoader = new GLTFLoader()
-    gltfLoader.setDRACOLoader(draco)
+    // gltfLoader.setDRACOLoader(draco)
 
     return new Promise((res, rej) => {
         gltfLoader.load(loaderPath, (gltf) => {
