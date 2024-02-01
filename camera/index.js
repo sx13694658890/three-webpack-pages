@@ -1,4 +1,4 @@
-import { OrthographicCamera, PerspectiveCamera } from "three";
+import { CubeCamera, LinearMipMapLinearFilter, OrthographicCamera, PerspectiveCamera, WebGLCubeRenderTarget } from "three";
 
 
 export const camera = new PerspectiveCamera(
@@ -9,7 +9,19 @@ export const camera = new PerspectiveCamera(
   )
   camera.position.set(5, 6, 8)
   camera.lookAt(0, 0, 0)
+
+
+
+  export const cubeRendererTarget=new WebGLCubeRenderTarget(120,{
+    generateMipmaps:true,
+    minFilter:LinearMipMapLinearFilter
+  })
   
+  // 构造一个包含6个PerspectiveCameras（透视摄像机）的立方摄像机， 并将其拍摄的场景渲染到一个WebGLCubeRenderTarget上。
+  export const cubeCamera=new CubeCamera(0.1,100000,cubeRendererTarget)
+  cubeCamera.position.set(0,0,0)
+
+
 
 const switchCamera=function(){
   if(camera instanceof PerspectiveCamera){

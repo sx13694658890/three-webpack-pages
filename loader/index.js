@@ -18,7 +18,6 @@ import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRe
 export { CSS2DRenderer, CSS2DObject }
 
 
-
 // text 文字加载
 export const fontLoader = new FontLoader()
 

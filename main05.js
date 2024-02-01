@@ -3,15 +3,17 @@ import { Scene, AxesHelper, Clock, Vector3, ArrowHelper, Vector2 } from "three";
 import { boxMesh, shapeMesh, sphereMesh, planeMesh } from "./geometry/index.js";
 import { spotLight, pointLight, ambientLight } from "./lights/index.js"
 import { createOrbitControls, createTrackballControls, createFlyControls, Gui } from "./controls/index.js";
-import { camera } from "./camera/index.js";
+import { camera,cubeCamera } from "./camera/index.js";
 import { renderer } from "./render/index.js";
 import { statsInit, stats, createRayCaster } from '@utils/common.js'
 import { createTween } from '@utils/tween.js'
 
-import { createMesh, createAnimate,createMeshBot } from "./geometry/modelGlft/index.js";
+import { createMesh,} from "./geometry/modelGlft/index.js";
+import { createPlaneMesh } from "./geometry/meshTexture/index.js";
 
 const scene = new Scene();
 
+scene.add(cubeCamera)
 // 灯光测试数据
 const lightTest = {
     ambient: 0xc3c3c3,// 环境光
@@ -32,14 +34,11 @@ let tweenObj = {
     z: 0,
 }
 
-
-
 window.onload = function () {
     sceneGeometryInit();
     sceneLightInit()
     run();
     help();
-    testInit()
     statsInit()
     eventInit()
 };
@@ -49,8 +48,8 @@ async function sceneGeometryInit() {
     scene.add(planeMesh);
     scene.add(sphereMesh)
     // scene.add(lineMesh)
-   const bot= await createMeshBot(scene)
-   mixer=bot.mixer
+    scene.add(createPlaneMesh())
+    cubeCamera.position.copy( createPlaneMesh().position );
 }
 // 场景灯光
 function sceneLightInit() {
@@ -76,22 +75,9 @@ function help() {
 }
 
 
-const eventTest = {
-    addEvent: () => {
-        console.log("aa")
-    }
-}
 
 
-//  测试模拟
-function testInit() {
-    const gui = new Gui()
-    gui.add(eventTest, "addEvent").name("增加几何体")
-    const tween = gui.addFolder("tween补间动画")
-    tween.add(tweenObj, 'x', -10, 10, 0.001).name("x轴方向")
-    tween.add(tweenObj, 'y', -10, 10, 0.001).name("y轴方向")
-    tween.add(tweenObj, 'z', -10, 10, 0.001).name("z轴方向")
-}
+
 
 // 补偿动画
 var tween = createTween(tweenObj, {
@@ -133,10 +119,8 @@ function run() {
     const delta = clock.getDelta()
     // tween.update()
    
-    if (mixer) {
-        mixer.update(elapsed - time)
-    }
     stats && stats.update()
+    cubeCamera.update(renderer,scene)
     renderer.render(scene, camera);
     camera.updateProjectionMatrix()
     //control.update()
