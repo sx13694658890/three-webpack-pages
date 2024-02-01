@@ -8,7 +8,7 @@ import { renderer } from "./render/index.js";
 import { statsInit, stats, createRayCaster } from '@utils/common.js'
 import { createTween } from '@utils/tween.js'
 
-import { createMesh, createAnimate } from "./geometry/modelGlft/index.js";
+import { createMesh, createAnimate,createMeshBot } from "./geometry/modelGlft/index.js";
 
 const scene = new Scene();
 
@@ -47,9 +47,8 @@ async function sceneGeometryInit() {
     scene.add(planeMesh);
     scene.add(sphereMesh)
     // scene.add(lineMesh)
-    mixer = await createMesh(scene)
-
-
+   const bot= await createMeshBot(scene)
+   mixer=bot.mixer
 }
 // 场景灯光
 function sceneLightInit() {
@@ -131,6 +130,7 @@ function run() {
     const elapsed = clock.getElapsedTime();
     const delta = clock.getDelta()
     // tween.update()
+   
     if (mixer) {
         mixer.update(elapsed - time)
     }

@@ -1,4 +1,4 @@
-import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry, Path, Points, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry, PointsMaterial, IcosahedronGeometry, Float32BufferAttribute, Sprite, SpriteMaterial, Texture, Color } from "three"
+import { Mesh, BoxGeometry, PlaneGeometry, SphereGeometry, MultiplyBlending, Vector3, Group, Line, BufferGeometry, BufferAttribute, CircleGeometry, RingGeometry, Shape, ShapeGeometry, Path, Points, DoubleSide, Vector2, LatheGeometry, ExtrudeGeometry, PointsMaterial, IcosahedronGeometry, Float32BufferAttribute, Sprite, SpriteMaterial, Texture, Color, SkinnedMesh, Skeleton, CylinderGeometry, Bone } from "three"
 import { ConvexGeometry } from "three/examples/jsm/geometries/ConvexGeometry.js"
 
 import { basicMaterial, depthMaterial, meshes, multipleFace, lambertMaterial, phongMaterial, shaderMaterial, lineMaterial, pointMaterial, normalMaterial } from './materials/index.js'
@@ -338,3 +338,33 @@ export function createPBDLoader(scene) {
 }
 
 
+
+// 蒙皮网格
+
+function createSkinnedMesh(){
+  const geo=new CylinderGeometry(5,5,5,5,15)
+  const position = geometry.attributes.position;
+  const vertex =new Vector3()
+  const skinIndices = [];
+  const skinWeights = [];
+  for ( let i = 0; i < position.count; i ++ ) {
+    vertex.fromBufferAttribute(position,i)
+  }
+    const mesh=new SkinnedMesh()
+    const skeleton=new Skeleton()
+
+}
+
+function createSkeleton(){
+    const bones=[]
+    const shoulder=new Bone()
+    const elbow=new Bone()
+    const hand=new Bone()
+    shoulder.add(elbow)
+    elbow.add(hand)
+    bones.push(shoulder)
+    bones.push(elbow)
+    bones.push(hand)
+    shoulder.position.y=3
+    const armSkeleton=new Skeleton(bones)
+}

@@ -45,3 +45,6 @@ OBJ 和MTL是相互配合的两种格式，经常一起使用。OBJ 文件定义
 ##### TWEEN 
 easing 的表现
 https://tweenjs.github.io/tween.js/examples/03_graphs.html
+
+
+ http://oos.moxiecode.com/js_webgl/md2_converter/
