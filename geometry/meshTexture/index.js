@@ -1,4 +1,4 @@
-import { Color, DoubleSide, Mesh, PlaneGeometry, RepeatWrapping, ShaderLib, SphereGeometry, Vector2 } from "three";
+import { BoxGeometry, Color, DoubleSide, Mesh, PlaneGeometry, RepeatWrapping, ShaderLib, SphereGeometry, Vector2 } from "three";
 import { createTexture } from "../../textures";
 import { phongMaterial } from "../materials";
 import { Gui } from "../../controls";
@@ -99,3 +99,37 @@ export function createSphereMesh() {
     return sphereMesh
 }
 
+export function createBoxMesh() {
+    var texture1 = createTexture('/assets/images/moon.jpg')
+    var texture2 = createTexture('/assets/images/earth.jpg')
+
+    const mapObj = {
+        bumpScale: 0.5,
+        normalScale :0.5,
+        reflectivity: 0.5,
+        shininess:30,
+        specular:0xff2aff,
+    }
+
+    const material = phongMaterial({
+        specularMap:texture1,
+        // normalMap:texture2,
+        specular:mapObj.specular,
+        shininess:mapObj.shininess,
+        
+    })
+
+    testInit()
+    //  测试模拟
+    function testInit() {
+        const gui = new Gui()
+        const tween = gui.addFolder("纹理测试")
+       
+    }
+
+    const cubeMesh=new Mesh(new BoxGeometry(2, 2,2), material)
+    cubeMesh.position.set(3,2,-2)
+   
+
+    return cubeMesh
+}

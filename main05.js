@@ -9,12 +9,16 @@ import { statsInit, stats, createRayCaster } from '@utils/common.js'
 import { createTween } from '@utils/tween.js'
 
 import { createMesh,} from "./geometry/modelGlft/index.js";
-import { createPlaneMesh, createSphereMesh } from "./geometry/meshTexture/index.js";
+import { createBoxMesh, createPlaneMesh, createSphereMesh } from "./geometry/meshTexture/index.js";
+import { createPostProcessing1,createPostProcessing2 } from "./composer/index.js";
 
 const scene = new Scene();
 
-scene.add(cubeCamera)
-
+//后期处理 post-processing
+const composer1=createPostProcessing1
+(renderer,scene,camera)
+const composer2=createPostProcessing2
+(renderer,scene,camera)
 // 灯光测试数据
 const lightTest = {
     ambient: 0xc3c3c3,// 环境光
@@ -49,7 +53,8 @@ async function sceneGeometryInit() {
     scene.add(planeMesh);
     scene.add(sphereMesh)
     // scene.add(lineMesh)
-    scene.add(createPlaneMesh())
+    // scene.add(createPlaneMesh())
+    scene.add(createBoxMesh())
     // scene.add(createSphereMesh())
     
 }
@@ -115,18 +120,22 @@ const fly = createFlyControls(camera, renderer.domElement)
 
 const clock = new Clock();
 let time = 0;
+const widthHalf=window.innerWidth/2, 
+          heightHalf=window.innerHeight/2;
 
 function run() {
     const elapsed = clock.getElapsedTime();
     const delta = clock.getDelta()
-    // tween.update()
-   
     stats && stats.update()
-    cubeCamera.update(renderer,scene)
-    renderer.render(scene, camera);
+    renderer.setViewport(0,0,widthHalf,heightHalf)
+    composer1.render()
+    renderer.setViewport(widthHalf,0,widthHalf,heightHalf)
+    composer2.render()
+    renderer.setViewport(widthHalf,heightHalf,widthHalf,heightHalf)
+    composer1.render()
+    renderer.setViewport(0,heightHalf,widthHalf,heightHalf)
+    composer2.render()
     camera.updateProjectionMatrix()
-    //control.update()
-    // trackball.update()
     fly.update(delta)
     requestAnimationFrame(run);
     time = elapsed;

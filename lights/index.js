@@ -4,9 +4,10 @@ import { texture } from '../textures/index.js'
 import { Lensflare, LensflareElement } from "three/examples/jsm/objects/Lensflare.js"
 // 聚光
 export const spotLight = new SpotLight(0xffffff);
-spotLight.position.set(0, 3, 0)
+spotLight.position.set(0, 11, 0)
 spotLight.castShadow = true
-spotLight.intensity = 5.0
+spotLight.intensity = 10.0
+spotLight.angle=90
 spotLight.target = planeMesh
 spotLight.shadowCameraVisible = true
 spotLight.shadowDarkness = 1

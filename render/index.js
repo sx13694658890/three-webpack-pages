@@ -1,19 +1,20 @@
 
 import { WebGLRenderer, Color, PCFShadowMap, PCFSoftShadowMap, WebGLDeferredRenderer } from "three";
-const canvas = document.getElementById("canvas");
-canvas.width = '100%'
-canvas.height = '100%'
+// const canvas = document.getElementById("canvas");
+const widthHalf=window.innerWidth/2, 
+heightHalf=window.innerHeight/2;
 function initGlRender() {
     const renderer = new WebGLRenderer({
         antialias: true,
-
     });
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(widthHalf*2, heightHalf*2);
     renderer.setClearColor(new Color(0xeeeeee));
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = PCFSoftShadowMap
+    renderer.autoClear=false
+    renderer.clear()
     document.body.appendChild(renderer.domElement)
     return renderer
 
@@ -28,7 +29,6 @@ function initGlDeferredRender() {
     const deferredRenderer = new WebGLDeferredRenderer()
     return
 }
-
 
 const renderer = initGlRender()
 
