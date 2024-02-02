@@ -1,8 +1,7 @@
 import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer'
 
 // 在当前图片上添加掩码，后续的 通道只会影 响掩码区域
-import {MaskPass} from 'three/examples/jsm/postprocessing/MaskPass'
-
+import {MaskPass,ClearMaskPass} from 'three/examples/jsm/postprocessing/MaskPass'
 
 // 通常位于过程链的开始，以便将渲染好的场景作为输入来提供给下一个后期处理步骤
 import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass'
@@ -26,18 +25,23 @@ import {DotScreenPass} from 'three/examples/jsm/postprocessing/DotScreenPass'
 // 自定义的shader
 import {CopyShader} from 'three/examples/jsm/shaders/CopyShader'
 import {LuminosityShader} from 'three/examples/jsm/shaders/LuminosityShader'
+import {ColorifyShader} from 'three/examples/jsm/shaders/ColorifyShader'
+import {SepiaShader} from 'three/examples/jsm/shaders/SepiaShader'
 import { Vector2 } from 'three'
 
 
 
 
-
-
-function createRenderPass(scene,camera){
+// 渲染通道
+export function createRenderPass(scene,camera){
     const renderPass=new RenderPass(scene,camera)
     return renderPass
 }
-
+// 掩码通道
+export function createMaskPass(scene,camera){
+    const maskPass=new MaskPass(scene,camera)
+    return maskPass
+}
 // 自定义后期处理着色器，并将其包含到后期处理过程链中
 function createShaderPass(shader){
     return new ShaderPass(shader)
@@ -72,8 +76,37 @@ function createBloom(){
     bloom.renderToScreen=true
     return bloom
  }
- 
 
+ export function createPostProcessing(renderer,{bgPass,earthPass,marisPass,marisMask,earthMask}){
+    const clearPass=new ClearMaskPass()
+    const composer=new EffectComposer(renderer)
+    composer.renderTarget1.stencilBuffer=true
+    composer.renderTarget2.stencilBuffer=true
+    composer.addPass(bgPass)
+    composer.addPass(earthPass)
+    composer.addPass(marisPass)
+
+    composer.addPass(marisMask)
+    const effectColorify=createShaderPass(ColorifyShader)
+    effectColorify.uniforms['color'].value.setRGB(123, 15, 1);
+    composer.addPass(effectColorify)
+    composer.addPass(clearPass)
+
+    const effectSepia=createShaderPass(SepiaShader)
+   
+    composer.addPass(earthMask)
+    composer.addPass(effectSepia)
+    composer.addPass(clearPass)
+
+    const effectCopy=createShaderPass(CopyShader)
+   
+   composer.addPass(effectCopy)
+       
+    return composer
+
+}
+
+// 合成器1
 export function createPostProcessing1(renderer,scene,camera){
     const composer=new EffectComposer(renderer)
     composer.addPass(createRenderPass(scene,camera))
@@ -82,6 +115,7 @@ export function createPostProcessing1(renderer,scene,camera){
         return composer
 
 }
+// 合成器2
 export function createPostProcessing2(renderer,scene,camera){
     const composer=new EffectComposer(renderer)
     composer.addPass(createRenderPass(scene,camera))

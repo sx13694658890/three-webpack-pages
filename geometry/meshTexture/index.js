@@ -1,10 +1,13 @@
 import { BoxGeometry, Color, DoubleSide, Mesh, PlaneGeometry, RepeatWrapping, ShaderLib, SphereGeometry, Vector2 } from "three";
 import { createTexture } from "../../textures";
-import { phongMaterial } from "../materials";
+import { basicMaterial, phongMaterial } from "../materials";
 import { Gui } from "../../controls";
 import { cubeRendererTarget } from "../../camera";
 
-
+import {
+    widthHalf,
+    heightHalf
+  } from '@utils/const.js'
 
 
 
@@ -132,4 +135,34 @@ export function createBoxMesh() {
    
 
     return cubeMesh
+}
+
+
+
+export function createEarthMesh(){
+    const earth=new Mesh(new SphereGeometry(5,32,32),phongMaterial({
+        specular:0xfffff,
+        shininess:4
+    }))
+    earth.position.x=-5
+    return earth
+}
+export function createMarisMesh(){
+    const earth=new Mesh(new SphereGeometry(2,32,32),phongMaterial({
+        specular:0xfffff,
+        shininess:4
+    }))
+    earth.position.x=5
+    return earth
+}
+export function createBgMesh(){
+    var texture = createTexture('/assets/images/map.jpg')
+    const bg=new Mesh(new PlaneGeometry(10,10),basicMaterial({
+    
+        map:texture,
+        side:DoubleSide
+    }))
+    bg.position.set(0,0,-50)
+    bg.scale.set(widthHalf*2,heightHalf*2,1)
+    return bg
 }

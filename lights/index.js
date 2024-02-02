@@ -3,14 +3,17 @@ import { planeMesh } from "../geometry";
 import { texture } from '../textures/index.js'
 import { Lensflare, LensflareElement } from "three/examples/jsm/objects/Lensflare.js"
 // 聚光
-export const spotLight = new SpotLight(0xffffff);
-spotLight.position.set(0, 11, 0)
-spotLight.castShadow = true
-spotLight.intensity = 10.0
-spotLight.angle=90
-spotLight.target = planeMesh
-spotLight.shadowCameraVisible = true
-spotLight.shadowDarkness = 1
+export function createSpotLight() {
+    const spotLight = new SpotLight(0xffffff);
+    spotLight.position.set(0, 11, 0)
+    spotLight.castShadow = true
+    spotLight.intensity = 10.0
+    spotLight.angle = 90
+    spotLight.target = planeMesh
+    spotLight.shadowCameraVisible = true
+    spotLight.shadowDarkness = 1
+    return spotLight
+}
 // 环境光
 export const ambientLight = new AmbientLight(0xcccccc)
 // ambientLight.position.set(1,1,5)
