@@ -9,11 +9,12 @@ import { statsInit, stats, createRayCaster } from '@utils/common.js'
 import { createTween } from '@utils/tween.js'
 
 import { createMesh,} from "./geometry/modelGlft/index.js";
-import { createPlaneMesh } from "./geometry/meshTexture/index.js";
+import { createPlaneMesh, createSphereMesh } from "./geometry/meshTexture/index.js";
 
 const scene = new Scene();
 
 scene.add(cubeCamera)
+
 // 灯光测试数据
 const lightTest = {
     ambient: 0xc3c3c3,// 环境光
@@ -49,11 +50,12 @@ async function sceneGeometryInit() {
     scene.add(sphereMesh)
     // scene.add(lineMesh)
     scene.add(createPlaneMesh())
-    cubeCamera.position.copy( createPlaneMesh().position );
+    // scene.add(createSphereMesh())
+    
 }
 // 场景灯光
 function sceneLightInit() {
-    // scene.add(spotLight)
+    scene.add(spotLight)
     // scene.add(ambientLight)
     scene.add(pointLight)
 }

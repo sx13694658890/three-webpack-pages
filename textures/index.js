@@ -1,4 +1,4 @@
-import { CubeTextureLoader, TextureLoader } from "three";
+import { CubeTextureLoader, RepeatWrapping, TextureLoader } from "three";
 import {DDSLoader } from 'three/examples/jsm/loaders/DDSLoader'
 
 import {TGALoader } from 'three/examples/jsm/loaders/TGALoader'
@@ -7,6 +7,9 @@ import {TGALoader } from 'three/examples/jsm/loaders/TGALoader'
 const textureLoader=new TextureLoader()
 export function createTexture(url='/assets/images/111.webp'){
     const texture=textureLoader.load(url)
+    texture.wrapS=RepeatWrapping
+    texture.wrapT=RepeatWrapping
+    texture.needsUpdate=true
     return texture
 }
 
