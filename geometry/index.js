@@ -31,6 +31,7 @@ export const boxMesh = () => {
   )
   boxMesh.name = "boxMesh-" + boxIndex
   boxMesh.position.y = 1
+  boxMesh.position.z = 2
   boxMesh.castShadow = true
   boxIndex += 1
   boxPoor.push(boxMesh)

@@ -39,7 +39,9 @@ module.exports = {
         main03: "./main03.js",
         main04: "./main04.js",
         main05: "./main05.js",
-        main06: "./main06.js"
+        main06: "./main06.js",
+        main07: "./main07.js",
+        main08: "./main08.js",
     },
     output: {
         filename: "[name]_bundle.js",

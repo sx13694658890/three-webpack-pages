@@ -21,13 +21,38 @@ import {TexturePass} from 'three/examples/jsm/postprocessing/TexturePass'
 // 将黑点图层应用到屏蓉的原始图片上
 import {DotScreenPass} from 'three/examples/jsm/postprocessing/DotScreenPass'
 
+// 可以在后期处理阶段添加抗锯齿效果。如果在演染阶段添加抗锯齿效果影响效率，那么可以使用该着色器来添加
+
+
 
 // 自定义的shader
 import {CopyShader} from 'three/examples/jsm/shaders/CopyShader'
 import {LuminosityShader} from 'three/examples/jsm/shaders/LuminosityShader'
 import {ColorifyShader} from 'three/examples/jsm/shaders/ColorifyShader'
 import {SepiaShader} from 'three/examples/jsm/shaders/SepiaShader'
+// 屏幕创建镜面效果
+import {MirrorShader} from 'three/examples/jsm/shaders/MirrorShader'
+// 改变顏色的色调和饱和度
+import {HueSaturationShader} from 'three/examples/jsm/shaders/HueSaturationShader'
+
+// 可以添加晕映效果。该效果可以在图片的中央周围显示黑色的边框
+import {VignetteShader} from 'three/examples/jsm/shaders/VignetteShader'
+// 着色器可以调整顏色的分布
+import {ColorCorrectionShader} from 'three/examples/jsm/shaders/ColorCorrectionShader'
+// 可以将构成颜色的红、绿、蓝 分开
+import {RGBShiftShader} from 'three/examples/jsm/shaders/RGBShiftShader'
+// 可以在场景上添加类似万花筒的效果 ，该效果会围绕场景的中央星径向反射
+import {KaleidoShader} from 'three/examples/jsm/shaders/KaleidoShader'
+// 可以模拟类似老电影里面的两条彩色效果
+import {TechnicolorShader} from 'three/examples/jsm/shaders/TechnicolorShader'
+// 散景效果使部分场景，从而突显主要的对象
+import {BokehShader} from 'three/examples/jsm/shaders/BokehShader'
+import {BokehShader2} from 'three/examples/jsm/shaders/BokehShader2'
+import {DOFMipMapShader} from 'three/examples/jsm/shaders/DOFMipMapShader'
+// import {DOFMipMapShader} from 'three/examples/jsm/'
+
 import { Vector2 } from 'three'
+import { Gui } from '../controls'
 
 
 
@@ -57,7 +82,7 @@ function createFilm(){
    const film= new FilmPass(10,false)
    return film
 }
-function createDotScreen(){
+function createDotScreenPass(){
     /**
      * center?: 可以徽调点的信移量, 
      * angle?: 点是按照某种方式对齐的通过angle属性可以改变对齐的方式, 
@@ -75,6 +100,23 @@ function createBloom(){
     const bloom= new BloomPass(40,0,10)
     bloom.renderToScreen=true
     return bloom
+ }
+
+
+ /// 合成器100
+ export function createPostProcessing100(renderer,{scene,camera}){
+    const composer=new EffectComposer(renderer)
+    composer.addPass(createRenderPass(scene,camera))
+    // composer.addPass(createShaderPass(DOFMipMapShader))
+
+    // function testShader(){
+    //     const gui=new Gui()
+
+    //     switch(){
+    //         case
+    //     }
+    // }
+    return composer
  }
 
  export function createPostProcessing(renderer,{bgPass,earthPass,marisPass,marisMask,earthMask}){
